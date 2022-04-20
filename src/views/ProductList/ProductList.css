@@ -114,3 +114,27 @@ li{
 .page-link{
   border: none;
 }
+
+@media only screen and (max-width: 1023px){
+  .product-cateloge{
+    flex-wrap: wrap;
+  }
+  .filter-left {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width:966px){
+  .categories,.nav-last{
+    display: none;
+  }
+  .header div img{
+    margin-left: 0px;
+  }
+  .search-div{
+    width: 100%;
+  }
+  .search-div input{
+    width: 80%;
+  }
+}

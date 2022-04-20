@@ -9,12 +9,15 @@ const Category = (props) => {
     const [checked, setChecked] = useState([])
     const [visibility, setVisibility] = useState(10);
     const [allChecked, setAllChecked] = useState(false);
+    const [checkedState,setCheckedState] = useState([]);
 
     const fetchCategories = async() => {
         const categoriesResponse = await axios.get(url)
         const categoriesData = await categoriesResponse.data.filters.primaryFilters[6].filterValues;
-        setCategories(categoriesData.slice(1,visibility));
-        setAllCategories(categoriesData);
+        const categoryNames  = categoriesData.map(c=>c.id)
+        setCategories(categoryNames.slice(0,visibility));
+        setCheckedState(new Array(categoryNames.length).fill(false))
+        setAllCategories(categoryNames);
     }
 
     useEffect(() => {
@@ -22,28 +25,39 @@ const Category = (props) => {
     },[])
 
     useEffect(() => {
-        setCategories(allCategories.slice(1,visibility));
+        setCategories(allCategories.slice(0,visibility));
     },[visibility]);
 
     const handleToggle = (value) => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-        if(currentIndex === -1){
-            newChecked.push(value)
-        }else{
-            newChecked.splice(currentIndex,1)
-        }
-        setChecked(newChecked);
+        // const currentIndex = checked.indexOf(value);
+        // const newChecked = [...checked];
+        // if(currentIndex === -1){
+        //     newChecked.push(value)
+        // }else{
+        //     newChecked.splice(currentIndex,1)
+        // }
+        // setChecked(newChecked);
 
-        props.handleFilters(newChecked);
+        // props.handleFilters(newChecked);
+
+        checkedState[value] = !checkedState[value]
+        const tempChecked = []
+        for(let i=0; i<checkedState.length; i++){
+            if(checkedState[i]){
+                tempChecked.push(allCategories[i])
+            }
+        }
+
+        setCheckedState([...checkedState])
+        setChecked([...tempChecked])
+        props.handleFilters(tempChecked)
     }
 
     useEffect(()=>{
-        if(allChecked){
-            setChecked([...allCategories])
-        }else{
-            setChecked([])
-        }
+        setCheckedState(new Array(allCategories.length).fill(allChecked))
+        const tempChecked = allChecked ? [...allCategories] : []
+        setChecked(tempChecked)
+        props.handleFilters(tempChecked)
     },[allChecked])
 
     return (
@@ -66,10 +80,10 @@ const Category = (props) => {
                             className='form-check-input'
                             type="checkbox"
                             id={category.id}
-                            onChange={() => handleToggle(category.id)}
-                            checked={checked.includes(category)}
+                            onChange={() => handleToggle(index)}
+                            checked={checkedState[index]}
                         />
-                        <label htmlFor={category.id}>{category.id} <span>({category.count})</span></label>
+                        <label htmlFor={category}>{category}</label>
                     </div>
                 )):
                 <></>

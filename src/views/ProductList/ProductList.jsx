@@ -68,14 +68,15 @@ const ProductList = () => {
         }
         else{
             const temp = allProducts.filter((product)=>{
-                let flag = false
-                for(const filter of filters){
-                    if (filter === product.brand){
-                        return true;
-                    }else if(filter === product.category){
-                        return true
-                    }
-                }
+
+                return (filters.includes(product.brand) || filters.includes(product.category))
+                // for(const filter of filters){
+                //     if (filter === product.brand){
+                //         return true;
+                //     }else if(filter === product.category){
+                //         return true
+                //     }
+                // }
             })
             setProducts([...temp])
         }
@@ -199,7 +200,7 @@ const ProductList = () => {
                 <div className="right" style={{width:"100%"}}>
                     <div className="sort">
                             <select name="type" id="type" onChange={e => setSortOption(e.target.value)} className="form-select" style={{height:"40px", width:"220px"}}>
-                                <option selected disabled>Sort by: Recommended</option>
+                                <option selected disabled>Sort by : Recommended</option>
                                 {
                                     sortdata.length > 0 ? 
                                         sortdata.map((option, index) => <option value={sortdata[index]} key={index} 

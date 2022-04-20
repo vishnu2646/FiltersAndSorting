@@ -9,12 +9,15 @@ const Brands = (props) => {
     const [checked, setChecked] = useState([])
     const [allChecked, setAllChecked] = useState(false);
     const [visibility,setVisibility] = useState(10);
+    const [checkedState,setCheckedState] = useState([]);
 
     const fetchBrands = async() => {
         const response = await axios.get(url);
         const brandsData = await response.data.filters.primaryFilters[2].filterValues;
-        setBrads(brandsData.slice(1,visibility));
-        setAllBrands(brandsData);
+        const brandNames  = brandsData.map(b=>b.id)
+        setBrads(brandNames.slice(0,visibility));
+        setCheckedState(new Array(brandNames.length).fill(false))
+        setAllBrands(brandNames);
     }
 
     useEffect(() => {
@@ -22,31 +25,44 @@ const Brands = (props) => {
     },[]);
 
     useEffect(() => {
-        setBrads(allBrands.slice(1,visibility));
+        setBrads(allBrands.slice(0,visibility));
     },[visibility]);
+;
 
 
     const handleToggle = (value) => {
-        
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-        
-        if(currentIndex === -1){
-            newChecked.push(value)
-        }else{
-            newChecked.splice(currentIndex,1)
-        }
-        setChecked(newChecked);
 
-        props.handleFilters(newChecked)
+        // const currentIndex = checked.indexOf(value);
+        // const newChecked = [...checked];
+        
+        // if(currentIndex === -1){
+        //     newChecked.push(value)
+        // }else{
+        //     newChecked.splice(currentIndex,1)
+        // }
+        // setChecked(newChecked);
+
+        checkedState[value] = !checkedState[value]
+        const tempChecked = []
+        for(let i=0;i < checkedState.length;i++){
+            if(checkedState[i]){
+                tempChecked.push(allBrands[i])
+            }
+        }
+
+        setCheckedState([...checkedState])
+        setChecked([...tempChecked])
+        props.handleFilters(tempChecked)
+
     }
+    console.log(checked);
 
     useEffect(()=>{
-        if(allChecked){
-            setChecked([...allBrands])
-        }else{
-            setChecked([])
-        }
+        setCheckedState(new Array(allBrands.length).fill(allChecked))
+        const tempChecked = allChecked ? [...allBrands] : []
+        setChecked(tempChecked)
+        props.handleFilters(tempChecked)
+
     },[allChecked])
 
     return (
@@ -68,11 +84,12 @@ const Brands = (props) => {
                         <input
                             className='form-check-input'
                             type="checkbox"
-                            id={brand.id}
-                            onChange={() => handleToggle(brand.id)}
-                            checked={checked.includes(brand)}
+                            id={brand}
+                            onChange={() => handleToggle(index)}
+                            checked={checkedState[index]}
+                            // checked={checked.indexOf(brand.id) ? false : true}
                         />
-                        <label htmlFor={brand.id}>{brand.id} <span>({brand.count})</span></label>
+                        <label htmlFor={brand}>{brand} </label>
                     </div> 
                 ))
                 : 

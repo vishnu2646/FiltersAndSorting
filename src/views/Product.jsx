@@ -47,6 +47,7 @@ const Product = (props) => {
                             style={{
                                 cursor: 'pointer',
                                 backgroundColor: currentPage === num ? "rgba(0,100,255,0.5)" : "",
+                                color: currentPage === num ? "#fff" : "#121212"
                             }}
                         >
                             {num}
