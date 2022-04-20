@@ -46,7 +46,7 @@ const Product = (props) => {
                             className="page-link"
                             style={{
                                 cursor: 'pointer',
-                                backgroundColor: `${currentPage === num ? "blue" : ""}`
+                                backgroundColor: currentPage === num ? "rgba(0,100,255,0.5)" : "",
                             }}
                         >
                             {num}

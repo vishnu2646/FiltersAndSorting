@@ -7,6 +7,7 @@ const Brands = (props) => {
     const [brands, setBrads] = useState([]);
     const [allBrands,setAllBrands] = useState([]);
     const [checked, setChecked] = useState([])
+    const [allChecked, setAllChecked] = useState(false);
     const [visibility,setVisibility] = useState(10);
 
     const fetchBrands = async() => {
@@ -24,7 +25,9 @@ const Brands = (props) => {
         setBrads(allBrands.slice(1,visibility));
     },[visibility]);
 
+
     const handleToggle = (value) => {
+        
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
         
@@ -38,8 +41,26 @@ const Brands = (props) => {
         props.handleFilters(newChecked)
     }
 
+    useEffect(()=>{
+        if(allChecked){
+            setChecked([...allBrands])
+        }else{
+            setChecked([])
+        }
+    },[allChecked])
+
     return (
         <div>
+            <div className='form-check'>
+                <input
+                    className='form-check-input'
+                    type="checkbox"
+                    id="Select All"
+                    checked={allChecked}
+                    onChange={()=>setAllChecked(val=>!val)}
+                />
+                <label htmlFor="Select All">Select All <span> / </span> Clear All</label>
+            </div>
             {
                 brands && brands.length > 0 ? 
                 brands.map((brand, index) => (
@@ -49,7 +70,7 @@ const Brands = (props) => {
                             type="checkbox"
                             id={brand.id}
                             onChange={() => handleToggle(brand.id)}
-                            checked={(checked.indexOf(brand.id) === -1) ? false : true}
+                            checked={checked.includes(brand)}
                         />
                         <label htmlFor={brand.id}>{brand.id} <span>({brand.count})</span></label>
                     </div> 

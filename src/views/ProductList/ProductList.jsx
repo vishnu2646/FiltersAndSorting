@@ -53,7 +53,7 @@ const ProductList = () => {
             <Product
                 productPerPage={productPerPage}
                 totalProducts={totalProducts}
-                currentPage={currentProducts}
+                currentPage={currentPage}
                 paginate={paginationNumber}
                 previousPage={previousPage}
                 nextPage={nextPage}

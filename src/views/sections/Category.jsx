@@ -8,6 +8,7 @@ const Category = (props) => {
     const [allCategories, setAllCategories] = useState([]);
     const [checked, setChecked] = useState([])
     const [visibility, setVisibility] = useState(10);
+    const [allChecked, setAllChecked] = useState(false);
 
     const fetchCategories = async() => {
         const categoriesResponse = await axios.get(url)
@@ -37,8 +38,26 @@ const Category = (props) => {
         props.handleFilters(newChecked);
     }
 
+    useEffect(()=>{
+        if(allChecked){
+            setChecked([...allCategories])
+        }else{
+            setChecked([])
+        }
+    },[allChecked])
+
     return (
         <div>
+            <div className='form-check'>
+                <input
+                    className='form-check-input'
+                    type="checkbox"
+                    id="Select All"
+                    checked={allChecked}
+                    onChange={()=>setAllChecked(val=>!val)}
+                />
+                <label htmlFor="Select All">Select All <span> / </span> Clear All</label>
+            </div>
             {
                 categories && categories.length > 0 ?
                 categories.map((category, index) => (
@@ -48,7 +67,7 @@ const Category = (props) => {
                             type="checkbox"
                             id={category.id}
                             onChange={() => handleToggle(category.id)}
-                            checked={(checked.indexOf(category.id) === -1) ? false : true}
+                            checked={checked.includes(category)}
                         />
                         <label htmlFor={category.id}>{category.id} <span>({category.count})</span></label>
                     </div>
