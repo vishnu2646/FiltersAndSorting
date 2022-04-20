@@ -21,6 +21,7 @@ Created a Filters and Sorting as like in [MYNTRA](https://myntra.com/black).
     </li>
         - The Result Will be as shown Below Image
 </ul>
+
 ##### Snapshot - 1
 <img src="/src/assets/images/GenderFilter.png"/>
 
