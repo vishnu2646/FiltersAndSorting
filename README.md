@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# FILTERS AND SORTING AS LIKE IN MYNTRA
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Created a Filters and Sorting as like in [MYNTRA](https://myntra.com/black).
 
-## Available Scripts
+# MODULES:
+    1. Filters
+        i)   Gender Filter
+        ii)  Brand Filter
+        iii) Category Filter
+        iv)  Product Name Filter
+    2. Sorting
+        i)   Discount sort(discount percentage or discount data from api)
+        ii)  Product Price Sort(Ascending and Descinding)
+        iii) Year sort("NEW" data from api)
+        iv)  Rating Sort("popularity" data from api)
 
-In the project directory, you can run:
+# GENDER FILTER
+<ul>
+    <li>
+        Please Select the Required Field in the Gender Form Fields
+    </li>
+        - The Result Will be as shown Below Image
+</ul>
+##### Snapshot - 1
+<img src="/src/assets/images/GenderFilter.png"/>
 
-### `npm start`
+##### Snapshot - 2
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<img src="/src/assets/images/Gender and Brand.png"/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Brand FILTER
+<ul>
+    <li>
+        Please Select the Required Field in the Brand Form Fields
+    </li>
+    <li>
+        We can Also select the Multiple Check Boxes in the Form.
+    </li>
+        - The Result Will be as shown in Snapshot - 2
+</ul>
 
-### `npm test`
+# POPULARITY SORTING
+<ul>
+    <li>
+        Please Select the Required Field in the Sort Form Field
+    </li>
+        - The Result Will be as shown in Snapshot - 3
+        - similarly same will be followed for remaning sorting
+</ul>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### Snapshot - 3
 
-### `npm run build`
+<img src="/src/assets/images/Popularity.png"/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# PRODUCT NAME FILTER
+<ul>
+    <li>
+        Now We can Filter the Products from the Navbar Search Field.
+    </li>
+        - The Result Will be as shown in Snapshot - 3
+        - similarly same will be followed for remaning sorting
+</ul>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##### Snapshot - 4
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="/src/assets/images/ProductNameSearch.png"/>
