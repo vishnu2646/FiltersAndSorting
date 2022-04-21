@@ -19,6 +19,7 @@ const ProductList = () => {
     const [sortdata, setSortData] = useState([]);
     const [sortOption, setSortOption] = useState();
     const [suggestions, setSuggestions] = useState([]);
+    const [filtered, setFiltered] = useState([]);
 
     const fetchProducts = async() => {
         const response = await axios.get(url)
@@ -61,7 +62,7 @@ const ProductList = () => {
         );
     }
 
-    // Brand Filters
+    // Brand and Category Filters
     const handleFilters = (filters) => {
         if (filters.length === 0){
             setProducts([...allProducts])
@@ -79,30 +80,34 @@ const ProductList = () => {
                 // }
             })
             setProducts([...temp])
+            setFiltered([...temp])
         }
     }
 
     // Gender Filters
     const handleGenderFilter = (value) => {
+        // if value is not provided it returns all the products
+        // value is nothing but the option we select from the Gender Filter Option
         if(value === null){
             setProducts([...allProducts])
         }else if(value === "boys girls" || value === "men women"){
             const temp = allProducts.filter((product) => {
-                let flag = false
                 if(product.gender === 'Unisex'){
                     return true
                 }
             })
             setProducts([...temp])
+            setFiltered([...temp])
         }else{
             const temp = allProducts.filter((product) => {
-                let flag = false;
+                // `.toLowerCase()` is used beacuse the value in the api has the UPPERCASE CHARACTER in the word
                 if(value === product.gender.toLowerCase()){
                     return true
                 }
             })
             // sets the filtered data and helps to renders the data
             setProducts([...temp])
+            setFiltered([...temp])
         }
     }
 
@@ -110,7 +115,7 @@ const ProductList = () => {
     useEffect(()=>{
         switch (sortOption) {
             case "popularity": // sort based on rating
-                allProducts.sort((a,b)=>{
+                filtered.sort((a,b)=>{
                     if(a.rating > b.rating)
                         return -1
                     if (a.rating < b.rating)
@@ -119,19 +124,19 @@ const ProductList = () => {
                 })
                 break;
             case "new": // sort based on the Year
-                allProducts.sort((a,b) => {
+                filtered.sort((a,b) => {
                     return parseInt(b.year) - parseInt(a.year)
                 })
                 break;
 
             case "price_desc": // sort based on the price in Descending Order
-                allProducts.sort((a,b) => {
+                filtered.sort((a,b) => {
                     return b.price - a.price
                 })
                 break;
 
             case "price_asc": // sort based on the price in Ascending Order
-                allProducts.sort((a,b) => {
+                filtered.sort((a,b) => {
                     return a.price - b.price
                 })
                 break;
@@ -142,8 +147,11 @@ const ProductList = () => {
             //     })
             //     break;
 
-            case "discount":
-                allProducts.sort((a,b) => {
+            case "discount": // sorting based on the `discountDisplayLabel` (i.e) discountDisplayLabel:"(30% Off)"
+                filtered.sort((a,b) => {
+                    // parseCurrencyString helps to sepetate the numbers and strings (i.e) `.value` and  `.symb0l`
+                    // parseCurrencyString(a.discountDisplayLabel).value returns number value (for eg 30)
+                    // parseCurrencyString(a.discountDisplayLabel).symbol returns number value (for eg (%off))
                     return parseCurrencyString(a.discountDisplayLabel).value - parseCurrencyString(b.discountDisplayLabel).value
                 })
                 break;
@@ -151,8 +159,8 @@ const ProductList = () => {
             default:
                 break;
         }
-        setProducts([...allProducts])
-    },[sortOption])
+        setProducts([...filtered])
+    },[sortOption, filtered]) // Effect works when the `sortOption` State changes everytime
 
     // Product name Filter
     const handleNameFilter = (text) => {
@@ -186,7 +194,7 @@ const ProductList = () => {
                             />
                         </div>
                         <div className="filter-categories">
-                            <p>Catrories</p>
+                            <p>Categories</p>
                             <Category handleFilters={value => handleFilters(value)}/>
                         </div> 
                         <div className="filter-categories">

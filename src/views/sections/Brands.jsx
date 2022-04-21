@@ -55,7 +55,6 @@ const Brands = (props) => {
         props.handleFilters(tempChecked)
 
     }
-    console.log(checked);
 
     useEffect(()=>{
         setCheckedState(new Array(allBrands.length).fill(allChecked))
