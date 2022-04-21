@@ -19,7 +19,6 @@ const ProductList = () => {
     const [sortdata, setSortData] = useState([]);
     const [sortOption, setSortOption] = useState();
     const [suggestions, setSuggestions] = useState([]);
-    const [filtered, setFiltered] = useState([]);
 
     const fetchProducts = async() => {
         const response = await axios.get(url)
@@ -80,7 +79,6 @@ const ProductList = () => {
                 // }
             })
             setProducts([...temp])
-            setFiltered([...temp])
         }
     }
 
@@ -97,7 +95,6 @@ const ProductList = () => {
                 }
             })
             setProducts([...temp])
-            setFiltered([...temp])
         }else{
             const temp = allProducts.filter((product) => {
                 // `.toLowerCase()` is used beacuse the value in the api has the UPPERCASE CHARACTER in the word
@@ -107,7 +104,6 @@ const ProductList = () => {
             })
             // sets the filtered data and helps to renders the data
             setProducts([...temp])
-            setFiltered([...temp])
         }
     }
 
@@ -115,7 +111,7 @@ const ProductList = () => {
     useEffect(()=>{
         switch (sortOption) {
             case "popularity": // sort based on rating
-                filtered.sort((a,b)=>{
+                allProducts.sort((a,b)=>{
                     if(a.rating > b.rating)
                         return -1
                     if (a.rating < b.rating)
@@ -124,19 +120,19 @@ const ProductList = () => {
                 })
                 break;
             case "new": // sort based on the Year
-                filtered.sort((a,b) => {
+                allProducts.sort((a,b) => {
                     return parseInt(b.year) - parseInt(a.year)
                 })
                 break;
 
             case "price_desc": // sort based on the price in Descending Order
-                filtered.sort((a,b) => {
+                allProducts.sort((a,b) => {
                     return b.price - a.price
                 })
                 break;
 
             case "price_asc": // sort based on the price in Ascending Order
-                filtered.sort((a,b) => {
+                allProducts.sort((a,b) => {
                     return a.price - b.price
                 })
                 break;
@@ -148,7 +144,7 @@ const ProductList = () => {
             //     break;
 
             case "discount": // sorting based on the `discountDisplayLabel` (i.e) discountDisplayLabel:"(30% Off)"
-                filtered.sort((a,b) => {
+                allProducts.sort((a,b) => {
                     // parseCurrencyString helps to sepetate the numbers and strings (i.e) `.value` and  `.symb0l`
                     // parseCurrencyString(a.discountDisplayLabel).value returns number value (for eg 30)
                     // parseCurrencyString(a.discountDisplayLabel).symbol returns number value (for eg (%off))
@@ -159,8 +155,8 @@ const ProductList = () => {
             default:
                 break;
         }
-        setProducts([...filtered])
-    },[sortOption, filtered]) // Effect works when the `sortOption` State changes everytime
+        setProducts([...allProducts])
+    },[sortOption, allProducts]) // Effect works when the `sortOption` State changes everytime
 
     // Product name Filter
     const handleNameFilter = (text) => {
